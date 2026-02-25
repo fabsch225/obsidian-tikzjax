@@ -25,6 +25,7 @@ export class TikzjaxSettingTab extends PluginSettingTab {
 		try {
 			localForage.config({ name: 'TikzJax', storeName: 'svgImages' });
 		} catch (error) {
+			console.log("Error configuring localForage:");
 			console.log(error);
 		}
 	}

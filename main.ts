@@ -46,8 +46,12 @@ export default class TikzjaxPlugin extends Plugin {
 		s.id = "tikzjax";
 		s.type = "text/javascript";
 		s.innerText = tikzjaxJs;
-		doc.body.appendChild(s);
-
+		try {
+			doc.body.appendChild(s);
+		} catch (error) {
+			console.log("Error loading TikZJax script:");
+			console.log(error);
+		}
 
 		doc.addEventListener('tikzjax-load-finished', this.postProcessSvg);
 	}
@@ -96,7 +100,7 @@ export default class TikzjaxPlugin extends Plugin {
 		this.registerMarkdownCodeBlockProcessor("tikz", (source, el, ctx) => {
 			const script = el.createEl("script");
 
-			script.setAttribute("type", "text/tikz");
+			script.setAttribute("type", "text/tikz-legacy");
 			script.setAttribute("data-show-console", "true");
 
 			script.setText(this.tidyTikzSource(source));
